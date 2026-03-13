@@ -1,0 +1,11 @@
+# Godot
+.godot/
+
+# Site
+site/node_modules/
+site/dist/
+site/public/
+
+# Editor
+.vscode/
+.DS_Store

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crashplan</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #000;
+      font-family: system-ui, sans-serif;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    iframe {
+      display: block;
+      width: 100%;
+      flex: 1;
+      border: none;
+      background: #000;
+    }
+    footer {
+      padding: 0.4rem;
+      text-align: center;
+      font-size: 0.7rem;
+      color: #1e2e3e;
+    }
+    footer.hidden { display: none; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: #3a5a7a; }
+
+    /* Fullscreen API: hide footer when document is fullscreen */
+    :fullscreen footer        { display: none; }
+    :-webkit-full-screen footer { display: none; }
+  </style>
+</head>
+<body>
+  <iframe src="game.html" allowfullscreen></iframe>
+  <footer>
+    <a href="https://peterklein.dev" target="_blank" rel="noopener">by peter with help</a>
+    &nbsp;·&nbsp;
+    <a href="#" id="fs-btn">full screen</a>
+  </footer>
+  <script>
+    function toggleFullscreen() {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(function () {});
+      } else {
+        document.documentElement.requestFullscreen().catch(function () {});
+      }
+    }
+
+    document.getElementById('fs-btn').addEventListener('click', function (e) {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+
+    // Hide footer for both Fullscreen API and browser F11
+    function syncFooter() {
+      var inFs = !!document.fullscreenElement || window.innerHeight >= screen.height - 5;
+      document.querySelector('footer').classList.toggle('hidden', inFs);
+    }
+    document.addEventListener('fullscreenchange', syncFooter);
+    window.addEventListener('resize', syncFooter);
+  </script>
+</body>
+</html>
